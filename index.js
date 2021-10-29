@@ -20,6 +20,7 @@ async function run() {
 
         const database = client.db("ALL_TRAVEL_PLACES");
         const AllPlaces = database.collection("places");
+        const AllGuides = database.collection("guide");
         const AddedService = database.collection("AddedService");
 
         app.get('/places', async(req, res) => {
@@ -39,6 +40,12 @@ async function run() {
             const newService = req.body;
             const result = await AddedService.insertOne(newService);
             res.send(result)
+        })
+
+        app.get('/guides', async(req, res) => {
+            const query = {};
+            const result = await AllGuides.find(query).toArray();
+            res.json(result);
         })
 
     } finally {
