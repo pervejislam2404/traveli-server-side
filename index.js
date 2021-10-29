@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const ObjectId = require('mongodb').ObjectId;
 
 app.use(cors());
 app.use(express.json());
@@ -18,11 +19,28 @@ async function run() {
         await client.connect();
 
         const database = client.db("ALL_TRAVEL_PLACES");
-        const movies = database.collection("places");
+        const AllPlaces = database.collection("places");
+        const AddedService = database.collection("AddedService");
 
-        app.get('/another', async(req, res) => {
-            res.send('server run successfully');
+        app.get('/places', async(req, res) => {
+            const query = {};
+            const result = await AllPlaces.find(query).toArray();
+            res.json(result)
         })
+
+        app.get('/service/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await AllPlaces.findOne(query);
+            res.json(result);
+        })
+
+        app.post('/addedService', async(req, res) => {
+            const newService = req.body;
+            const result = await AddedService.insertOne(newService);
+            res.send(result)
+        })
+
     } finally {
         // await client.close();
     }
