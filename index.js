@@ -31,7 +31,8 @@ async function run() {
 
         app.post('/newUser', async(req, res) => {
             const newUser = req.body;
-            console.log(newUser)
+            const result = await AllPlaces.insertOne(newUser);
+            res.json(result)
         })
 
         app.get('/service/:id', async(req, res) => {
