@@ -58,12 +58,13 @@ async function run() {
             res.json(result)
         })
 
-        app.delete('/delete/:id', async(req, res) => {
+        app.delete('/cancel/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await AddedService.deleteOne(query);
-            res.send(result);
+            const result = await AddedService.findOne(query);
+            res.json(result);
         })
+
 
         app.get('/allAddedService', async(req, res) => {
             const query = {};
@@ -79,7 +80,7 @@ async function run() {
             console.log(query)
             const updateDoc = {
                 $set: {
-                    status: user.status
+                    status: user.status,
                 },
             };
             const result = await AddedService.updateOne(query, updateDoc, options);
