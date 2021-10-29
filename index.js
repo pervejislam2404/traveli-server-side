@@ -38,6 +38,7 @@ async function run() {
 
         app.post('/addedService', async(req, res) => {
             const newService = req.body;
+            // console.log(newService);
             const result = await AddedService.insertOne(newService);
             res.send(result)
         })
@@ -51,8 +52,38 @@ async function run() {
         app.get('/added/:email', async(req, res) => {
             const email = req.params.email;
             const query = { email: email };
+            // console.log(query)
             const result = await AddedService.find(query).toArray();
+            // console.log(result);
             res.json(result)
+        })
+
+        app.delete('/delete/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await AddedService.deleteOne(query);
+            res.send(result);
+        })
+
+        app.get('/allAddedService', async(req, res) => {
+            const query = {};
+            const result = await AddedService.find(query).toArray();
+            res.json(result);
+        })
+
+        app.put('/updateUser/:id', async(req, res) => {
+            const id = req.params.id;
+            const user = req.body;
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            console.log(query)
+            const updateDoc = {
+                $set: {
+                    status: user.status
+                },
+            };
+            const result = await AddedService.updateOne(query, updateDoc, options);
+            res.send(result)
         })
 
     } finally {
