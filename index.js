@@ -48,6 +48,13 @@ async function run() {
             res.json(result);
         })
 
+        app.get('/added/:email', async(req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const result = await AddedService.find(query).toArray();
+            res.json(result)
+        })
+
     } finally {
         // await client.close();
     }
