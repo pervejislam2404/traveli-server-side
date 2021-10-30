@@ -31,7 +31,10 @@ async function run() {
 
         app.delete('/deleteOne/:id', async(req, res) => {
             const userID = req.params.id;
-            const query = { _id: ObjectId(userID) };
+            // console.log(userID);
+            const query = {
+                _id: userID
+            };
             const result = await AddedService.deleteOne(query);
             res.send(result)
         })
@@ -45,9 +48,13 @@ async function run() {
         app.get('/service/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await AllPlaces.findOne(query);
+            const options = {
+                projection: { _id: 0 },
+            };
+            const result = await AllPlaces.findOne(query, options);
             res.json(result);
         })
+
 
         app.post('/addedService', async(req, res) => {
             const newService = req.body;
@@ -90,7 +97,7 @@ async function run() {
             const user = req.body;
             const query = { _id: ObjectId(id) };
             const options = { upsert: true };
-            console.log(query)
+            // console.log(query)
             const updateDoc = {
                 $set: {
                     status: user.status,
