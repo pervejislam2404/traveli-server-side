@@ -1,9 +1,9 @@
-const { MongoClient } = require('mongodb');
-require('dotenv').config()
 const express = require('express');
-const cors = require('cors');
 const app = express();
-const ObjectId = require('mongodb').ObjectId;
+require('dotenv').config()
+const cors = require('cors');
+const { MongoClient } = require('mongodb');
+const ObjectId = require("mongodb").ObjectId;
 
 app.use(cors());
 app.use(express.json());
