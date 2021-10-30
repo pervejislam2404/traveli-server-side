@@ -64,10 +64,10 @@ async function run() {
             res.json(result)
         })
 
-        app.delete('/cancel/:id', async(req, res) => {
+        app.get('/cancel/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await AddedService.deleteOne(query);
+            const result = await AddedService.findOne(query);
             res.json(result);
         })
 
