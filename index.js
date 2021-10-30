@@ -31,7 +31,9 @@ async function run() {
 
         app.delete('/deleteOne/:id', async(req, res) => {
             const userID = req.params.id;
-            console.log(userID)
+            const query = { _id: ObjectId(userID) };
+            const result = await AddedService.deleteOne(query);
+            res.send(result)
         })
 
         app.post('/newUser', async(req, res) => {
