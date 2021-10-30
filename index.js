@@ -29,6 +29,11 @@ async function run() {
             res.json(result)
         })
 
+        app.delete('/deleteOne/:id', async(req, res) => {
+            const userID = req.params.id;
+            console.log(userID)
+        })
+
         app.post('/newUser', async(req, res) => {
             const newUser = req.body;
             const result = await AllPlaces.insertOne(newUser);
@@ -64,12 +69,12 @@ async function run() {
             res.json(result)
         })
 
-        app.get('/cancel/:id', async(req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await AddedService.findOne(query);
-            res.json(result);
-        })
+        // app.get('/cancel/:id', async(req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) };
+        //     const result = await AddedService.findOne(query);
+        //     res.json(result);
+        // })
 
 
         app.get('/allAddedService', async(req, res) => {
@@ -101,5 +106,5 @@ run().catch(console.dir);
 
 
 app.listen(port, () => {
-    console.log('server running on port here' + port);
+    console.log('server running on port ' + port);
 });
